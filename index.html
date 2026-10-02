@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Breach Simulation</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #000;
+    color: #00ff41;
+    font-family: Consolas, monospace;
+    overflow: hidden;
+}
+
+#terminal {
+    padding: 25px;
+    height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+    text-shadow: 0 0 8px #00ff41;
+}
+
+.warning {
+    color: #ff1744;
+    text-shadow: 0 0 10px red;
+}
+
+.big {
+    font-size: clamp(28px, 6vw, 70px);
+    text-align: center;
+    margin-top: 25vh;
+}
+
+.cursor {
+    display: inline-block;
+    width: 9px;
+    height: 18px;
+    background: #00ff41;
+    animation: blink .7s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.scanlines {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,.025) 0px,
+        rgba(255,255,255,.025) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+}
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+<div class="scanlines"></div>
+
+<script>
+const terminal = document.getElementById("terminal");
+
+const lines = [
+    "[SYSTEM] Initializing secure simulation...",
+    "[NET] Establishing encrypted tunnel...",
+    "[SCAN] Searching virtual nodes...",
+    "[SCAN] Node 192.0.2.14 detected",
+    "[SCAN] Node 198.51.100.27 detected",
+    "[FIREWALL] Analyzing protection layer...",
+    "[FIREWALL] Simulation bypass: 100%",
+    "[AUTH] Checking authorization...",
+    "[AUTH] ACCESS GRANTED",
+    "[PAYLOAD] Loading simulated payload...",
+    "[PAYLOAD] ████████████████████ 100%",
+    "[SYSTEM] Simulation complete."
+];
+
+let i = 0;
+
+function typeLine() {
+    if (i >= lines.length) {
+        setTimeout(showPrank, 1000);
+        return;
+    }
+
+    const line = document.createElement("div");
+    terminal.appendChild(line);
+
+    let text = lines[i];
+    let j = 0;
+
+    const timer = setInterval(() => {
+        line.textContent += text[j];
+        j++;
+
+        if (j >= text.length) {
+            clearInterval(timer);
+            i++;
+            setTimeout(typeLine, 250);
+        }
+    }, 18);
+}
+
+function showPrank() {
+    terminal.innerHTML = `
+        <div class="big warning">
+            ACCESS GRANTED
+            <br><br>
+            😎 ŞAKA!
+            <div style="
+                color:#00ff41;
+                font-size:18px;
+                margin-top:30px;
+            ">
+                Bu yalnızca bir animasyondu.<br>
+                Gerçek hiçbir sistem hacklenmedi.
+            </div>
+        </div>
+    `;
+}
+
+typeLine();
+</script>
+
+</body>
+</html>
